@@ -1,17 +1,14 @@
 import { getImageUrl } from "@/services/api-request-urls";
 import { MovieDetailsData } from "@/util/models/movie-details";
-import {
-  Card,
-  CardBody,
-  Stack,
-  Heading,
-  Text,
-  Box,
-} from "@chakra-ui/react";
-import { StarIcon } from "@chakra-ui/icons";
+import { Card, CardBody, Stack, Heading, Text, Box } from "@chakra-ui/react";
+import { ArrowBackIcon, StarIcon } from "@chakra-ui/icons";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const MovieDetails = ({ movie }: { movie: MovieDetailsData }) => {
+  const router = useRouter();
+
   const ratingValue = parseInt(movie.vote_average.toString().charAt(0));
   let stars: JSX.Element[] = [];
 
@@ -39,8 +36,20 @@ export const MovieDetails = ({ movie }: { movie: MovieDetailsData }) => {
       <Stack>
         <CardBody>
           <Heading size='md'>
-            {movie.title} ({movie.release_date.split("-")[0]})
+            <Box
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
+            >
+              {movie.title} ({movie.release_date.split("-")[0]})
+              <ArrowBackIcon
+                onClick={() => {
+                  router.back();
+                }}
+              />
+            </Box>
           </Heading>
+
           <Text py='2'>
             {movie.genres.map((genre) => (
               <span key={genre.id} style={{ marginRight: "1em" }}>

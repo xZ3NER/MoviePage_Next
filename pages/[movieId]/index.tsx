@@ -5,6 +5,7 @@ import {
 } from "@/services/api-request-urls";
 import { MovieDetailsData } from "@/util/models/movie-details";
 import { PopularMovieData } from "@/util/models/popular-movies";
+import { Box } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 
@@ -21,7 +22,9 @@ const MovieDetailPage: NextPage<DetailPageProps> = ({ movie }) => {
       <Head>
         <title>{movie.title}</title>
       </Head>
-      <MovieDetails movie={movie}/>
+      <Box boxShadow='xl' marginBottom='8'>
+        <MovieDetails movie={movie} />
+      </Box>
     </>
   );
 };
