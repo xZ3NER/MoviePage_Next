@@ -1,29 +1,32 @@
-import { getMovieDetailsUrl, getPopularMoviesUrl } from "@/services/api-request-urls";
+import { MovieDetails } from "@/components";
+import {
+  getMovieDetailsUrl,
+  getPopularMoviesUrl,
+} from "@/services/api-request-urls";
+import { MovieDetailsData } from "@/util/models/movie-details";
 import { PopularMovieData } from "@/util/models/popular-movies";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 
 // DetailPage props types
 interface DetailPageProps {
-  movie: PopularMovieData;
+  movie: MovieDetailsData;
 }
 
 // /:movieId page (dynamic page)
-const MovieDetailPage: NextPage<DetailPageProps> = ({movie}) => {
-  return <>
-  {/* Instead of Head, can use an Layout component that have a Head above a children prop */}
-  <Head>
-    <title>{movie.title}</title>
-  </Head>
-    <div>
-      <p>{movie.id}</p>
-      <p>{movie.title}</p>
-      <p>{movie.release_date}</p>
-    </div>
-  </>;
-}
+const MovieDetailPage: NextPage<DetailPageProps> = ({ movie }) => {
+  return (
+    <>
+      {/* Instead of Head, can use an Layout component that have a Head above a children prop */}
+      <Head>
+        <title>{movie.title}</title>
+      </Head>
+      <MovieDetails movie={movie}/>
+    </>
+  );
+};
 
-// Obtain all possible params that movieId can be 
+// Obtain all possible params that movieId can be
 // (Since there are a lot of movies, it will only fetch
 // the first page ids, and use fallback: "blocking")
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -47,17 +50,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // Obtain the movie detail with the id on the params
-export const getStaticProps: GetStaticProps = async ({params}) => {
-
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const movieId = params?.movieId!;
-  
+
   const response = await fetch(getMovieDetailsUrl(+movieId));
-  const data: PopularMovieData = await response.json();
+  const data: MovieDetailsData = await response.json();
 
   return {
     props: {
       movie: data,
-    }
+    },
   };
 };
 

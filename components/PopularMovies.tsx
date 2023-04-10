@@ -36,7 +36,7 @@ export const PopularMovies = ({
                 style={{
                   objectFit: "contain",
                   objectPosition: "center",
-                  borderRadius: "inherit",
+                  borderRadius: "3px",
                 }}
                 priority
               />

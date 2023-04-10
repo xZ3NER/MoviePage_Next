@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Navigation, Pagination, A11y } from "swiper";
 import styles from "@/styles/HomePage.module.scss";
-import { getImageUrl } from "@/services/api-request-urls";
+import { PopularMovieData } from "@/util/models/popular-movies";
+import { SwiperImage } from "./SwiperImage";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { PopularMovieData } from "@/util/models/popular-movies";
 
 export const PopularMoviesSwiper = ({
   popularMovies,
@@ -30,13 +29,7 @@ export const PopularMoviesSwiper = ({
       {popularMovies.map((movie) => (
         <SwiperSlide key={movie.id}>
           <div className={styles["swiper-container"]}>
-            <Image
-              src={getImageUrl(movie.backdrop_path)}
-              alt={movie.title}
-              fill
-              priority
-              style={{ objectFit: "cover", objectPosition: "center" }}
-            />
+            <SwiperImage src={movie.backdrop_path} alt={movie.title}/>
             <div className={styles.details}>
               <h1>{movie.title}</h1>
               <p>{movie.release_date.split("-")[0]}</p>
