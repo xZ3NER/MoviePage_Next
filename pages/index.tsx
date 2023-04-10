@@ -8,25 +8,27 @@ import { GetServerSideProps, NextPage } from "next";
 
 import Head from "next/head";
 
+// Page props types (returned by getServerSideProps)
 interface HomePageProps {
-  children?: React.ReactNode;
   swiperMovies: PopularMovieData[];
   popularMovies: PopularMovieData[];
-  currentPage: number;
-  maxPages: number;
 }
 
+// Home page
 export const HomePage: NextPage<HomePageProps> = ({
   swiperMovies,
   popularMovies,
-  currentPage,
-  maxPages,
 }) => {
+  // NextJS hook for navigation
   const router = useRouter();
 
-  const onPaginationChange = (page:number) => {
+  // Get the current page through query params
+  const currPage = router.query.page;
+
+  const onPaginationChangeHandler = (page: number) => {
     const query = router.query;
-    query.page = (page).toString();
+    query.page = page.toString();
+    // Navigate to the same path, but with different query param (another page)
     router.push({
       pathname: router.pathname,
       query: query,
@@ -60,8 +62,9 @@ export const HomePage: NextPage<HomePageProps> = ({
               <Pagination
                 shadow
                 color='primary'
-                total={maxPages}
-                onChange={onPaginationChange}
+                total={500}
+                page={+currPage!}
+                onChange={onPaginationChangeHandler}
               />
             </Box>
           </Flex>
@@ -71,26 +74,31 @@ export const HomePage: NextPage<HomePageProps> = ({
   );
 };
 
+// Update the page on every request (in this case, when query param changes)
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const page = query?.page || 1;
 
+  // PopularMovies, that changes when query param changes (managed by pagination using router.push)
   const response = await fetch(getPopularMoviesUrl(+page));
   const data = await response.json();
 
+  const popularMovies: PopularMovieData[] = data.results;
+
+  // Throws 500 if we try to get to that page
+  // const maxPages: number = data.total_pages;
+
+  // Swiper movies (only the first page, should be in getStaticProps,
+  // but we cannot have SSR and SSG at the same time on the same page)
   const swiperRes = await fetch(getPopularMoviesUrl(1));
   const swiperData = await swiperRes.json();
 
-  const popularMovies: PopularMovieData[] = data.results;
-  const maxPages: number = data.total_pages;
-
   const swiperMovies: PopularMovieData[] = swiperData.results;
 
+  // Return some props for be used in the HomePage component
   return {
     props: {
       swiperMovies: swiperMovies,
       popularMovies: popularMovies,
-      currentPage: page,
-      maxPages: maxPages,
     },
   };
 };

@@ -3,13 +3,13 @@ import { getImageUrl } from "@/services/api-request-urls";
 import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 
 import { PopularMovieData } from "@/util/models/popular-movies";
+import Link from "next/link";
 
 export const PopularMovies = ({
   popularMovies,
 }: {
   popularMovies: PopularMovieData[];
 }) => {
-
   return (
     <Box>
       <SimpleGrid
@@ -27,18 +27,20 @@ export const PopularMovies = ({
             maxW={200}
             className='movie'
           >
-            <Image
-              src={getImageUrl(movie.poster_path)}
-              alt={movie.title}
-              width={200}
-              height={300}
-              style={{
-                objectFit: "contain",
-                objectPosition: "center",
-                borderRadius: "inherit",
-              }}
-              priority
-            />
+            <Link href={`/${movie.id}`}>
+              <Image
+                src={getImageUrl(movie.poster_path)}
+                alt={movie.title}
+                width={200}
+                height={300}
+                style={{
+                  objectFit: "contain",
+                  objectPosition: "center",
+                  borderRadius: "inherit",
+                }}
+                priority
+              />
+            </Link>
             <Box
               p={1}
               mt='1'

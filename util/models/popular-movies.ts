@@ -1,3 +1,4 @@
+// Model structure for typescript
 export class PopularMovieData {
   id: string;
   title: string;
