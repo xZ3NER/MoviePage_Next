@@ -22,7 +22,7 @@ const MovieDetailPage: NextPage<DetailPageProps> = ({ movie }) => {
       <Head>
         <title>{movie.title}</title>
       </Head>
-      <Box boxShadow='xl' marginBottom='8'>
+      <Box boxShadow='xl' marginBottom='8' >
         <MovieDetails movie={movie} />
       </Box>
     </>

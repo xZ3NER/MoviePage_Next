@@ -43,14 +43,20 @@ export const HomePage: NextPage<HomePageProps> = ({
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main>
+      <main style={{ paddingTop: "3.8em" }}>
         <section>
           <PopularMoviesSwiper popularMovies={swiperMovies} />
         </section>
         <section>
           <Flex direction='column'>
             <Box padding={4} paddingBottom={0}>
-              <Text>See more</Text>
+              <Text
+                style={{
+                  borderBottom: "2px solid #0072f5",
+                }}
+              >
+                See more
+              </Text>
             </Box>
             <PopularMovies popularMovies={popularMovies} />
             <Box
@@ -58,6 +64,7 @@ export const HomePage: NextPage<HomePageProps> = ({
               justifyContent='flex-end'
               marginBottom={10}
               marginRight={10}
+              minW='300'
             >
               <Pagination
                 shadow
@@ -65,6 +72,8 @@ export const HomePage: NextPage<HomePageProps> = ({
                 total={500}
                 page={+currPage!}
                 onChange={onPaginationChangeHandler}
+                className='pagination'
+                style={{ flexWrap: "wrap" }}
               />
             </Box>
           </Flex>

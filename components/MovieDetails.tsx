@@ -23,6 +23,7 @@ export const MovieDetails = ({ movie }: { movie: MovieDetailsData }) => {
       variant='outline'
       borderRadius={"none"}
       border={"none"}
+      paddingTop='3.8em'
     >
       <Image
         style={{ objectFit: "cover", width: "auto", height: "auto" }}
@@ -46,6 +47,7 @@ export const MovieDetails = ({ movie }: { movie: MovieDetailsData }) => {
                 onClick={() => {
                   router.back();
                 }}
+                style={{ cursor: "pointer" }}
               />
             </Box>
           </Heading>

@@ -1,0 +1,18 @@
+.image {
+  transition: transform 0.2s;
+  animation: fadeIn 0.4s;
+  margin: 0;
+
+  &:hover {
+    transform: scale(0.95);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
